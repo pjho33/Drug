@@ -1,0 +1,78 @@
+==========================================================
+🚀 [Start] Auto Drug Discovery Pipeline: run_d_glucose_robust
+   Target: raw_data/4PYP.pdb
+   Drug: OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O
+==========================================================
+
+🔹 [Step 1] Preparing Receptor (Environment: dd_core)...
+🛠️ [Step 1] Preparing Receptor: raw_data/4PYP.pdb
+   ✂️ Extracting Chain A using Biopython...
+   🔧 Loading extracted chain into PDBFixer...
+   🧹 Removing artifacts (Water, Ions, Heterogens)...
+   🔧 Fixing missing residues and atoms...
+   💧 Adding Hydrogens (pH 7.0)...
+   ✅ Saved cleaned receptor to: /home/pjho3/projects/Drug/results/run_d_glucose_robust/cleaned_receptor.pdb
+
+🔹 [Step 2] Running DiffDock (Environment: dd_ai)...
+Generating ESM language model embeddings
+Processing 1 of 1 batches (1 sequences)
+0it [00:00, ?it/s]/home/pjho3/projects/Drug/DiffDock/datasets/parse_chi.py:91: RuntimeWarning: invalid value encountered in cast
+  Y = indices.astype(int)
+1it [00:45, 45.86s/it]1it [00:45, 45.86s/it]
+🤖 [Step 2] Running DiffDock AI Prediction...
+   Target: /home/pjho3/projects/Drug/results/run_d_glucose_robust/cleaned_receptor.pdb
+   Ligand: OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O
+   🚀 Executing DiffDock...
+   ✅ Docking Finished! Results in: /home/pjho3/projects/Drug/results/run_d_glucose_robust/docking_output
+   ✅ Found candidate: /home/pjho3/projects/Drug/results/run_d_glucose_robust/docking_output/complex_0/rank1.sdf
+
+🔹 [Step 3] Running Validation (Environment: dd_core)...
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+🔬 [Step 3] Running MD Validation (Implicit Solvent): /home/pjho3/projects/Drug/results/run_d_glucose_robust/cleaned_receptor.pdb + /home/pjho3/projects/Drug/results/run_d_glucose_robust/best_docking_pose.sdf
+   ⚠️ No hydrogens found. Adding hydrogens...
+   🚀 Creating System (Implicit Solvent Mode)...
+   📉 Minimizing Energy...
+   🏃 Running MD Simulation (50,000 steps)...
+#"Step","Potential Energy (kJ/mole)","Temperature (K)"
+5000,-29875.070985600625,293.60330246831455
+10000,-29553.992925153056,299.2273833707207
+15000,-29766.807602883124,296.8199053129023
+20000,-30027.647077381655,301.0474957592207
+25000,-30375.989758808537,299.5430042855278
+30000,-30127.175604686592,296.79296679957315
+35000,-30057.884897445667,300.476899932954
+40000,-29986.97699442506,304.7580728487761
+45000,-30159.105621837363,296.1496865772877
+50000,-30276.534369021814,296.74309695740214
+   ✅ Validation Done. Trajectory saved to /home/pjho3/projects/Drug/results/run_d_glucose_robust/validation_trajectory.pdb
+
+🔹 [Step 4] Scoring Binding Energy (MM-GBSA)...
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+🧮 [Step 4] Calculating Binding Energy (MM-GBSA): /home/pjho3/projects/Drug/results/run_d_glucose_robust/validation_trajectory.pdb
+   💊 Loading Ligand Reference: /home/pjho3/projects/Drug/results/run_d_glucose_robust/best_docking_pose.sdf
+   📂 Loading trajectory...
+   🧹 Stripping solvent (Water) and Ions (NA, CL)...
+   🏃 Processing 10 frames (stride=1)...
+      Frame    0: dG = -25.03 kcal/mol
+--------------------------------------------------
+   📊 Final Binding Energy: -20.75 +/- 2.73 kcal/mol
+--------------------------------------------------
+   💾 Score saved to: /home/pjho3/projects/Drug/results/run_d_glucose_robust/binding_score.csv
+
+==========================================================
+🎉 [Success] Pipeline Complete!
+   📂 Trajectory: /home/pjho3/projects/Drug/results/run_d_glucose_robust/validation_trajectory.pdb
+   📊 Final Score: /home/pjho3/projects/Drug/results/run_d_glucose_robust/binding_score.csv
+==========================================================
+AVERAGE,-20.7452
+STD_DEV,2.7255

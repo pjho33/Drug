@@ -1,0 +1,80 @@
+==========================================================
+🚀 [Start] Auto Drug Discovery Pipeline: run_tripod_avidity
+   Target: raw_data/4PYP_trimer.pdb
+   Drug: OC1O[C@@H](CCOCCOCc2cn(Cc3cc(Cn4cc(COCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)cc(Cn4cc(COCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)c3)nn2)[C@H](O)[C@@H](O)[C@@H]1O
+==========================================================
+
+🔹 [Step 1] Preparing Receptor (Environment: dd_core)...
+🛠️ [Step 1] Preparing Receptor (High-End Mode): raw_data/4PYP_trimer.pdb
+   ✂️ Extracting Chain A using Biopython...
+   🔧 Loading extracted chain into PDBFixer...
+   🧹 Removing artifacts (Water, Ions, Heterogens)...
+   🔧 Fixing missing residues and atoms...
+   💧 Adding Hydrogens (pH 7.0)...
+   ✅ Saved cleaned receptor to: /home/pjho3/projects/Drug/results/run_tripod_avidity/cleaned_receptor.pdb
+
+🔹 [Step 2] Running DiffDock (Environment: dd_ai)...
+Generating ESM language model embeddings
+Processing 1 of 1 batches (1 sequences)
+0it [00:00, ?it/s]/home/pjho3/projects/Drug/DiffDock/datasets/parse_chi.py:91: RuntimeWarning: invalid value encountered in cast
+  Y = indices.astype(int)
+1it [01:20, 80.55s/it]1it [01:20, 80.55s/it]
+🤖 [Step 2] Running DiffDock AI Prediction (High-Performance)...
+   Target: /home/pjho3/projects/Drug/results/run_tripod_avidity/cleaned_receptor.pdb
+   Ligand: OC1O[C@@H](CCOCCOCc2cn(Cc3cc(Cn4cc(COCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)cc(Cn4cc(COCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)c3)nn2)[C@H](O)[C@@H](O)[C@@H]1O
+   🚀 Executing DiffDock...
+   ✅ Docking Finished! Results in: /home/pjho3/projects/Drug/results/run_tripod_avidity/docking_output
+   ✅ Found candidate: /home/pjho3/projects/Drug/results/run_tripod_avidity/docking_output/complex_0/rank1.sdf
+
+🔹 [Step 3] Running Validation (Environment: dd_core)...
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+🔬 [Step 3] Running MD Validation (Explicit Solvent / High-End): /home/pjho3/projects/Drug/results/run_tripod_avidity/cleaned_receptor.pdb + /home/pjho3/projects/Drug/results/run_tripod_avidity/best_docking_pose.sdf
+   ⚠️ No hydrogens found. Adding hydrogens...
+   💧 Adding Water Box (Explicit Solvent)...
+   🧱 Total Atoms: 104372 (Ready for High-RAM)
+   📉 Minimizing Energy...
+   🏃 Running MD Simulation (50,000 steps)...
+#"Step","Potential Energy (kJ/mole)","Temperature (K)"
+5000,-1390364.3947946206,300.8063576815763
+10000,-1388659.5677322326,300.97878121012883
+15000,-1391540.3218385847,299.0814962904959
+20000,-1388827.8493383052,300.6049187923985
+25000,-1390673.5550125642,299.459534638679
+30000,-1389642.5171171827,300.20007143798273
+35000,-1390810.3467384437,301.47435474486366
+40000,-1390940.2052117568,300.04286676034985
+45000,-1390103.213082023,301.1475860616067
+50000,-1390858.0823208103,300.3648331468014
+   ✅ Validation Done. Trajectory saved to /home/pjho3/projects/Drug/results/run_tripod_avidity/validation_trajectory.pdb
+
+🔹 [Step 4] Scoring Binding Energy (MM-GBSA)...
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+/bin/bash: /home/pjho3/miniconda3/envs/dd_core/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+🧮 [Step 4] Calculating Binding Energy (MM-GBSA): /home/pjho3/projects/Drug/results/run_tripod_avidity/validation_trajectory.pdb
+   💊 Loading Ligand Reference: /home/pjho3/projects/Drug/results/run_tripod_avidity/best_docking_pose.sdf
+   📂 Loading trajectory...
+   🧹 Stripping solvent (Water) and Ions (NA, CL)...
+      - Removing 184 ions...
+   🏃 Processing 10 frames (stride=1)...
+      Frame    0: dG = -125.19 kcal/mol
+--------------------------------------------------
+   📊 Final Binding Energy: -118.31 +/- 5.01 kcal/mol
+--------------------------------------------------
+   💾 Score saved to: /home/pjho3/projects/Drug/results/run_tripod_avidity/binding_score.csv
+
+==========================================================
+🎉 [Success] Pipeline Complete!
+   📂 Trajectory: /home/pjho3/projects/Drug/results/run_tripod_avidity/validation_trajectory.pdb
+   📊 Final Score: /home/pjho3/projects/Drug/results/run_tripod_avidity/binding_score.csv
+==========================================================
+AVERAGE,-118.3099
+STD_DEV,5.0074

@@ -1,0 +1,77 @@
+==========================================================
+🚀 [Start] Auto Drug Discovery Pipeline: run_tripod_peg6_test
+   Target: raw_data/4PYP_trimer.pdb
+   Drug: OC1O[C@@H](CCOCCOCOCCOCOCCOCOCCOCOCCOCOCCOCc2cn(Cc3cc(Cn4cc(COCCOCOCCOCOCCOCOCCOCOCCOCOCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)cc(Cn4cc(COCCOCOCCOCOCCOCOCCOCOCCOCOCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)c3)nn2)[C@H](O)[C@@H](O)[C@@H]1O
+==========================================================
+
+🔹 [Step 1] Preparing Receptor (Environment: dd_core)...
+🛠️ [Step 1] Preparing Receptor (High-End Mode): raw_data/4PYP_trimer.pdb
+   ✂️ Extracting Chain A using Biopython...
+   🔧 Loading extracted chain into PDBFixer...
+   🧹 Removing artifacts (Water, Ions, Heterogens)...
+   🔧 Fixing missing residues and atoms...
+   💧 Adding Hydrogens (pH 7.0)...
+   ✅ Saved cleaned receptor to: /home/pjho3/projects/Drug/results/run_tripod_peg6_test/cleaned_receptor.pdb
+
+🔹 [Step 2] Running DiffDock (Environment: dd_ai)...
+Generating ESM language model embeddings
+Processing 1 of 1 batches (1 sequences)
+0it [00:00, ?it/s]/home/pjho3/projects/Drug/DiffDock/datasets/parse_chi.py:91: RuntimeWarning: invalid value encountered in cast
+  Y = indices.astype(int)
+[2025-Dec-10 07:26:45 KST] WARNING -Complex ['complex_0'] Batch 1 Inference Iteration 0: 5 / 5 samples failed
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/pjho3/projects/Drug/DiffDock/inference.py", line 260, in main
+    data_list, confidence = sampling(data_list=data_list, model=model,
+  File "/home/pjho3/projects/Drug/DiffDock/utils/sampling.py", line 116, in sampling
+    tr_score, rot_score, tor_score = model(mod_complex_graph_batch)[:3]
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/pjho3/projects/Drug/DiffDock/models/cg_model.py", line 318, in forward
+    rec_edge_index, rec_edge_attr, rec_edge_sh, rec_edge_weight = self.embedding(data)
+  File "/home/pjho3/projects/Drug/DiffDock/models/cg_model.py", line 290, in embedding
+    rec_node_attr = self.rec_emb_layers[l](rec_node_attr, data['receptor', 'receptor'].edge_index, edge_attr_, rec_edge_sh, edge_weight=rec_edge_weight)
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/pjho3/projects/Drug/DiffDock/models/tensor_layers.py", line 311, in forward
+    raise ValueError("No edges and no nodes")
+ValueError: No edges and no nodes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pjho3/miniconda3/envs/dd_ai/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pjho3/projects/Drug/DiffDock/inference.py", line 318, in <module>
+    main(_args)
+  File "/home/pjho3/projects/Drug/DiffDock/inference.py", line 302, in main
+    logger.warning("Failed on", orig_complex_graph["name"], e)
+Message: 'Failed on'
+Arguments: (['complex_0'], ValueError('No edges and no nodes'))
+1it [00:18, 18.61s/it]1it [00:18, 18.61s/it]
+[2025-Dec-10 07:26:45 KST] WARNING -
+    Failed for 1 / 1 complexes.
+    Skipped 0 / 1 complexes.
+
+🤖 [Step 2] Running DiffDock AI Prediction (High-Performance)...
+   Target: /home/pjho3/projects/Drug/results/run_tripod_peg6_test/cleaned_receptor.pdb
+   Ligand: OC1O[C@@H](CCOCCOCOCCOCOCCOCOCCOCOCCOCOCCOCc2cn(Cc3cc(Cn4cc(COCCOCOCCOCOCCOCOCCOCOCCOCOCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)cc(Cn4cc(COCCOCOCCOCOCCOCOCCOCOCCOCOCCOCC[C@@H]5OC(O)[C@@H](O)[C@H](O)[C@H]5O)nn4)c3)nn2)[C@H](O)[C@@H](O)[C@@H]1O
+   🚀 Executing DiffDock...
+   ✅ Docking Finished! Results in: /home/pjho3/projects/Drug/results/run_tripod_peg6_test/docking_output
+❌ Step 2 Failed! Docking result not found.

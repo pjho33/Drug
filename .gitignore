@@ -1,6 +1,9 @@
-results/
-*.sdf
-*.pdb
-*.mol2
-*.frcmod
-__pycache__/
+# 1. 모든 것을 무시 (루트 레벨에서 파일과 폴더를 무시)
+/*
+*
+
+# 2. 예외 처리: .gitignore 파일 자체는 추적
+!/.gitignore
+
+# 3. 예외 처리: SCRIPTS 폴더는 추적 (소문자 확인)
+!/scripts/

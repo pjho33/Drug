@@ -1,0 +1,6 @@
+results/
+*.sdf
+*.pdb
+*.mol2
+*.frcmod
+__pycache__/

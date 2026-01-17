@@ -1,0 +1,15 @@
+
+  Tripod_PEG2_generated
+
+  0  0  0  0  0  0  0  0  0  0999 V2000
+M  END
+> <SMILES>
+c1c(Cn2cc(OCCOCCOO[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)nn2)cc(Cn2cc(OCCOCCOO[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)nn2)cc1Cn2cc(OCCOCCOO[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)nn2
+
+> <Name>
+Tripod (L-glucose-PEG2)3-TRIS
+
+> <Description>
+Three L-glucose units connected via PEG2 linkers to a TRIS core through triazole rings
+
+$$$$

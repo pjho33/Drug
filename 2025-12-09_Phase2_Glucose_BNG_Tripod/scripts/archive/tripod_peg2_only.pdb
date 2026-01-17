@@ -1,0 +1,17 @@
+REMARK   Tripod PEG2: (L-glucose-PEG2)3-TRIS
+REMARK   Structure requires 3D coordinate generation
+REMARK   SMILES: c1c(Cn2cc(OCCOCCOO[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)nn2)cc(Cn2cc(OCCOCCOO[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)nn2)cc1Cn2cc(OCCOCCOO[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)nn2
+REMARK   
+REMARK   Components:
+REMARK   - Core: Benzene-based TRIS
+REMARK   - Linker: Triazole + PEG2 (2 ethylene glycol units)
+REMARK   - Head groups: 3 × L-glucose
+REMARK   
+REMARK   Molecular composition:
+REMARK   - Triazole rings: 3
+REMARK   - L-glucose units: 3
+REMARK   - PEG2 linkers: 3
+REMARK   
+REMARK   NOTE: This file contains only structural information.
+REMARK   For 3D coordinates, use molecular modeling software with the SMILES string.
+END

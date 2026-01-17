@@ -56,10 +56,27 @@ build/
 *_backup_*/
 backup_*/
 
-# ===== 7. Git 관련 =====
+# ===== 7. 정리된 프로젝트 폴더 (대용량 데이터) =====
+# Phase 2 & Phase 3 결과 폴더 (results, md_simulation 등 대용량)
+2025-12-09_Phase2_Glucose_BNG_Tripod/results/
+2025-12-09_Phase2_Glucose_BNG_Tripod/structures/
+2025-12-09_Phase2_Glucose_BNG_Tripod/analysis/
+2026-01-06_Phase3_SDG_Glycated_GLUT1/md_simulation/
+2026-01-06_Phase3_SDG_Glycated_GLUT1/mmpbsa/
+2026-01-06_Phase3_SDG_Glycated_GLUT1/analysis/
+
+# 단, README와 scripts는 포함
+!2025-12-09_Phase2_Glucose_BNG_Tripod/README.md
+!2025-12-09_Phase2_Glucose_BNG_Tripod/scripts/
+!2025-12-09_Phase2_Glucose_BNG_Tripod/scripts/**
+!2026-01-06_Phase3_SDG_Glycated_GLUT1/README.md
+!2026-01-06_Phase3_SDG_Glycated_GLUT1/scripts/
+!2026-01-06_Phase3_SDG_Glycated_GLUT1/scripts/**
+
+# ===== 8. Git 관련 =====
 .git/objects/pack/*.pack
 
-# ===== 8. 압축 파일 =====
+# ===== 9. 압축 파일 =====
 *.tar.gz
 *.zip
 *.7z

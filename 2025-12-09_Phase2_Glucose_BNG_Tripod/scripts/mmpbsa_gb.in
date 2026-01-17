@@ -1,0 +1,8 @@
+&general
+  verbose=1,
+  interval=1,
+/
+&gb
+  igb=5,
+  saltcon=0.150,
+/

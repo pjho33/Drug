@@ -1,0 +1,101 @@
+======================================================================
+Reorganizing Drug_local_20160117 into structured folders
+======================================================================
+
+📁 Creating directory structure...
+  ✅ /home/pjho3tr/projects/Drug/20241209_Phase2_Glucose_BNG_Tripod/scripts
+  ✅ /home/pjho3tr/projects/Drug/20241209_Phase2_Glucose_BNG_Tripod/results
+  ✅ /home/pjho3tr/projects/Drug/20241209_Phase2_Glucose_BNG_Tripod/analysis
+  ✅ /home/pjho3tr/projects/Drug/20241209_Phase2_Glucose_BNG_Tripod/structures
+  ✅ /home/pjho3tr/projects/Drug/20260106_Phase3_SDG_Glycated_GLUT1/scripts
+  ✅ /home/pjho3tr/projects/Drug/20260106_Phase3_SDG_Glycated_GLUT1/md_simulation
+  ✅ /home/pjho3tr/projects/Drug/20260106_Phase3_SDG_Glycated_GLUT1/analysis
+  ✅ /home/pjho3tr/projects/Drug/20260106_Phase3_SDG_Glycated_GLUT1/mmpbsa
+
+📦 Phase 2: Copying data...
+  Copying results folder...
+    ✅ phase2_gnina_md
+    ✅ run_l_glucose_test
+    ✅ run_d_glucose_explicit
+    ✅ diffdock_docking
+    ✅ run_tripod_peg6_test
+    ✅ run_tripod_avidity
+    ✅ run_tripod_peg12_pattern
+    ✅ run_tris_peg12
+    ✅ run_tripod_peg2_monomer_baseline
+    ✅ analysis
+    ✅ run_tripod_peg6_final
+    ✅ phase4_glycan
+    ✅ diffdock_test
+    ✅ run_d_glucose_robust
+    ✅ phase2_short_tripod_test
+    ✅ phase2_short_tripod_test2
+    ✅ phase2_rep2
+    ✅ phase2_short_tripod
+    ✅ gnina_docking
+    ✅ run_tripod_peg6_manual
+    ✅ run_tripod_peg2_trimer_baseline
+    ✅ run_tripod_peg24
+    ✅ phase2_rep1
+    ✅ run_tris_peg24_triazole_amide
+    ✅ phase2_rep3
+  Copying scripts folder...
+    ✅ scripts
+  Copying analysis folder...
+    ✅ analysis
+  Copying structures folder...
+    ✅ structures
+  Copying ligand SMILES files...
+    ✅ tripod_peg6_l_glucose.smi
+    ✅ tripod_peg6_l_glucose_old.smi
+    ✅ tripod_peg12_l_glucose.smi
+    ✅ tris_peg12_l_glucose.smi
+    ✅ tripod_l_glucose.smi
+    ✅ tripod_peg12_l_glucose_v2.smi
+    ✅ tripod_peg24_l_glucose.smi
+    ✅ tris_peg24_triazole_amide_l_glucose.smi
+    ✅ tripod_peg6_l_glucose_v2.smi
+    ✅ tripod_peg6_l_glucose_v2.sdf
+    ✅ run_pipeline.sh
+    ✅ run_manual_pipeline.sh
+    ✅ run_pipeline_now.sh
+    ✅ run_tris_peg12.sh
+
+📦 Phase 3: Organizing SDG-Glycated GLUT1 data...
+  Copying archive data...
+    ✅ phase3_peg2_submission
+    ✅ phase3_charmm_gui_submission_20260106_110918
+    ✅ phase3_glycosylation
+    ✅ phase3_with_tripod_20260106_110918
+  Copying phase3_final...
+    ✅ phase3_final
+  Copying mmpbsa...
+    ✅ mmpbsa
+  Copying phase3_md_analysis...
+  Copying current Drug/scripts to Phase 3...
+    ✅ 03_run_simulation2.py
+    ✅ reorganize_drug_local.py
+    ✅ 04_calc_energy.py
+    ✅ 00_virtual_click.py
+    ✅ README.md
+    ✅ 00_virtual_click.py:Zone.Identifier:Zone.Identifier
+    ✅ 01_prepare_receptor.py
+    ✅ 03_run_simulation.py
+    ✅ 00_create_trimer.py
+    ✅ 04_calc_energy.py:Zone.Identifier
+    ✅ 01_prepare_receptor.py:Zone.Identifier
+    ✅ 04_calc_energy.py:Zone.Identifier:Zone.Identifier
+    ✅ 02_run_docking.py:Zone.Identifier
+    ✅ 05_analyze_movement.py
+    ✅ 02_manual_docking.py
+    ✅ 02_run_docking.py
+    ✅ 03_run_simulation.py:Zone.Identifier
+    ✅ 00_virtual_click.py:Zone.Identifier
+
+✅ Reorganization complete!
+
+📁 Created directories:
+  /home/pjho3tr/projects/Drug/20241209_Phase2_Glucose_BNG_Tripod
+  /home/pjho3tr/projects/Drug/20260106_Phase3_SDG_Glycated_GLUT1
+
+======================================================================

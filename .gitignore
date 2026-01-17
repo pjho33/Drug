@@ -1,9 +1,96 @@
-# 1. 모든 것을 무시 (루트 레벨에서 파일과 폴더를 무시)
-/*
-*
+# ============================================
+# Git 전략: 프로젝트 중심, 스크립트 포함
+# ============================================
 
-# 2. 예외 처리: .gitignore 파일 자체는 추적
-!/.gitignore
+# ===== 1. MD Trajectory 파일 (대용량) =====
+*.dcd
+*.xtc
+*.trr
+*.nc
+*.netcdf
 
-# 3. 예외 처리: SCRIPTS 폴더는 추적 (소문자 확인)
-!/scripts/
+# ===== 2. 대용량 구조 파일 =====
+**/results/**/*.pdb
+**/results/**/*.psf
+**/results/**/*.parm7
+**/results/**/*.rst7
+**/results/**/*.crd
+**/data/**/*.pdb
+**/data/**/*.psf
+
+# 10MB 이상 파일 패턴
+**/step5_*.pdb
+**/step5_*.psf
+**/prod_*.pdb
+**/validation_*.pdb
+
+# ===== 3. 바이너리 및 모델 파일 =====
+*.pt
+*.pth
+*.npy
+*.npz
+*.pkl
+*.pickle
+
+# ===== 4. 로그 및 출력 파일 =====
+**/results/**/*.log
+**/results/**/*.out
+*.mdout.*
+*_MMPBSA_*.mdout.*
+
+# ===== 5. 임시 및 캐시 파일 =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*:Zone.Identifier
+
+# ===== 6. 백업 폴더 =====
+*_backup/
+*_backup_*/
+backup_*/
+
+# ===== 7. Git 관련 =====
+.git/objects/pack/*.pack
+
+# ===== 8. 압축 파일 =====
+*.tar.gz
+*.zip
+*.7z
+*.rar
+
+# ============================================
+# 포함할 것 (명시적)
+# ============================================
+# 모든 프로젝트 폴더의 scripts/ 포함
+!*/scripts/
+!*/scripts/**
+
+# README 및 문서 포함
+!*.md
+!*/docs/
+!*/docs/**
+
+# 설정 파일 포함
+!*.inp
+!*.in
+!*.yaml
+!*.yml
+!*.json
+!*.toml
+!*.cfg
+
+# 작은 topology 파일 포함
+!topol.top
+!*.str
+!*.prm
+!*.rtf
+
+# .gitignore 자체 포함
+!.gitignore

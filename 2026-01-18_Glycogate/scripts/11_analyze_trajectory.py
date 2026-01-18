@@ -25,22 +25,20 @@ def analyze_trajectory(results_dir, replica=1):
     
     results_path = Path(results_dir)
     
-    # MDTraj 사용
+    # MDAnalysis 우선 사용 (표준)
     try:
-        import mdtraj as md
-        print("✅ MDTraj 사용")
-        use_mdtraj = True
-    except ImportError:
-        print("⚠️  MDTraj 없음, MDAnalysis 시도")
+        import MDAnalysis as mda
+        print("✅ MDAnalysis 사용 (표준)")
         use_mdtraj = False
-    
-    if not use_mdtraj:
+    except ImportError:
+        print("⚠️  MDAnalysis 없음, MDTraj 시도")
         try:
-            import MDAnalysis as mda
-            print("✅ MDAnalysis 사용")
+            import mdtraj as md
+            print("✅ MDTraj 사용")
+            use_mdtraj = True
         except ImportError:
-            print("❌ MDTraj 또는 MDAnalysis 설치 필요")
-            print("   conda install -c conda-forge mdtraj")
+            print("❌ MDAnalysis 또는 MDTraj 설치 필요")
+            print("   conda install -c conda-forge mdanalysis")
             return
     
     print()
@@ -253,8 +251,181 @@ def analyze_with_mdanalysis(topology_file, traj_files, results_path, replica):
     import MDAnalysis as mda
     from MDAnalysis.analysis import rms, distances
     
-    print("MDAnalysis 분석은 아직 구현되지 않았습니다.")
-    print("MDTraj을 설치해주세요: conda install -c conda-forge mdtraj")
+    print("Step 1: Universe 생성")
+    print("-" * 80)
+    
+    # Universe 생성 (모든 trajectory 파일 한 번에 로드)
+    print(f"로딩 중: {topology_file}")
+    print(f"Trajectory 파일: {len(traj_files)}개")
+    
+    # 모든 trajectory 파일을 리스트로 전달
+    traj_file_list = [str(f) for f in traj_files]
+    u = mda.Universe(topology_file, traj_file_list)
+    
+    print(f"✅ 총 프레임: {len(u.trajectory)}")
+    print(f"   시간: {len(u.trajectory) * 0.1:.1f} ns (100 ps 간격)")
+    print()
+    
+    # Ligand 선택
+    print("Step 2: Ligand 원자 선택")
+    print("-" * 80)
+    
+    try:
+        # 다양한 residue 이름 시도
+        for resname in ['LIG', 'UNK', 'MOL', 'HET']:
+            lig = u.select_atoms(f'resname {resname}')
+            if len(lig) > 0:
+                print(f"✅ Ligand 발견: resname {resname}")
+                break
+        
+        if len(lig) == 0:
+            # 물과 이온 제외한 모든 원자
+            lig = u.select_atoms('not (resname TIP3 or resname SOD or resname CLA or resname POT)')
+            print(f"✅ Ligand (물/이온 제외): {len(lig)}개 원자")
+    except:
+        lig = u.atoms
+        print(f"⚠️  전체 원자 사용: {len(lig)}개")
+    
+    print(f"   원자 수: {len(lig)}")
+    print()
+    
+    # 분석 1: Radius of gyration
+    print("Step 3: Radius of Gyration 분석")
+    print("-" * 80)
+    
+    rg_values = []
+    for ts in u.trajectory:
+        rg = lig.radius_of_gyration()
+        rg_values.append(rg)
+    
+    rg_values = np.array(rg_values)
+    
+    print(f"평균 Rg: {np.mean(rg_values):.2f} ± {np.std(rg_values):.2f} Å")
+    print(f"최소 Rg: {np.min(rg_values):.2f} Å")
+    print(f"최대 Rg: {np.max(rg_values):.2f} Å")
+    
+    # 저장
+    np.save(results_path / f"rg_rep{replica}.npy", rg_values)
+    print(f"✅ 저장: rg_rep{replica}.npy")
+    print()
+    
+    # 분석 2: End-to-end 거리
+    print("Step 4: End-to-End 거리 분석")
+    print("-" * 80)
+    
+    try:
+        # TRIS 중심 원자 찾기
+        tris_atoms = lig.select_atoms('name C1 or name C2 or name C3')
+        if len(tris_atoms) == 0:
+            tris_atoms = lig[:1]  # 첫 번째 원자
+        tris_center = tris_atoms[0]
+        
+        # Glucose 말단 원자 찾기
+        glc_atoms = lig.select_atoms('name O6 or name O5 or name O4')
+        if len(glc_atoms) == 0:
+            glc_atoms = lig[-1:]  # 마지막 원자
+        glc_end = glc_atoms[-1]
+        
+        print(f"TRIS 중심: {tris_center.name} (index {tris_center.index})")
+        print(f"Glucose 말단: {glc_end.name} (index {glc_end.index})")
+        
+        # 거리 계산
+        distance_values = []
+        for ts in u.trajectory:
+            dist = np.linalg.norm(tris_center.position - glc_end.position)
+            distance_values.append(dist)
+        
+        distance_values = np.array(distance_values)
+        
+        print(f"평균 거리: {np.mean(distance_values):.2f} ± {np.std(distance_values):.2f} Å")
+        print(f"최소 거리: {np.min(distance_values):.2f} Å")
+        print(f"최대 거리: {np.max(distance_values):.2f} Å")
+        
+        # 저장
+        np.save(results_path / f"end_to_end_rep{replica}.npy", distance_values)
+        print(f"✅ 저장: end_to_end_rep{replica}.npy")
+        
+    except Exception as e:
+        print(f"⚠️  End-to-end 거리 계산 실패: {e}")
+        distance_values = None
+    
+    print()
+    
+    # 시각화
+    print("Step 5: 결과 시각화")
+    print("-" * 80)
+    
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    
+    # Rg 시계열
+    axes[0, 0].plot(np.arange(len(rg_values)) * 0.1, rg_values, linewidth=0.5)
+    axes[0, 0].set_xlabel('Time (ns)')
+    axes[0, 0].set_ylabel('Radius of Gyration (Å)')
+    axes[0, 0].set_title('Rg vs Time')
+    axes[0, 0].grid(True, alpha=0.3)
+    
+    # Rg 분포
+    axes[0, 1].hist(rg_values, bins=50, density=True, alpha=0.7, edgecolor='black')
+    axes[0, 1].set_xlabel('Radius of Gyration (Å)')
+    axes[0, 1].set_ylabel('Probability Density')
+    axes[0, 1].set_title('Rg Distribution')
+    axes[0, 1].axvline(np.mean(rg_values), color='red', linestyle='--', label='Mean')
+    axes[0, 1].legend()
+    axes[0, 1].grid(True, alpha=0.3)
+    
+    if distance_values is not None:
+        # End-to-end 시계열
+        axes[1, 0].plot(np.arange(len(distance_values)) * 0.1, distance_values, linewidth=0.5)
+        axes[1, 0].set_xlabel('Time (ns)')
+        axes[1, 0].set_ylabel('End-to-End Distance (Å)')
+        axes[1, 0].set_title('End-to-End Distance vs Time')
+        axes[1, 0].grid(True, alpha=0.3)
+        
+        # End-to-end 분포
+        axes[1, 1].hist(distance_values, bins=50, density=True, alpha=0.7, edgecolor='black')
+        axes[1, 1].set_xlabel('End-to-End Distance (Å)')
+        axes[1, 1].set_ylabel('Probability Density')
+        axes[1, 1].set_title('End-to-End Distance Distribution')
+        axes[1, 1].axvline(np.mean(distance_values), color='red', linestyle='--', label='Mean')
+        axes[1, 1].legend()
+        axes[1, 1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig(results_path / f"analysis_rep{replica}.png", dpi=300)
+    print(f"✅ 저장: analysis_rep{replica}.png")
+    print()
+    
+    # 요약 저장
+    print("Step 6: 요약 저장")
+    print("-" * 80)
+    
+    summary = {
+        'n_frames': len(u.trajectory),
+        'time_ns': len(u.trajectory) * 0.1,
+        'rg_mean': float(np.mean(rg_values)),
+        'rg_std': float(np.std(rg_values)),
+        'rg_min': float(np.min(rg_values)),
+        'rg_max': float(np.max(rg_values)),
+    }
+    
+    if distance_values is not None:
+        summary.update({
+            'end_to_end_mean': float(np.mean(distance_values)),
+            'end_to_end_std': float(np.std(distance_values)),
+            'end_to_end_min': float(np.min(distance_values)),
+            'end_to_end_max': float(np.max(distance_values)),
+        })
+    
+    import json
+    with open(results_path / f"summary_rep{replica}.json", 'w') as f:
+        json.dump(summary, f, indent=2)
+    
+    print(f"✅ 저장: summary_rep{replica}.json")
+    print()
+    
+    print("=" * 80)
+    print("✅ 분석 완료!")
+    print("=" * 80)
 
 
 def main():

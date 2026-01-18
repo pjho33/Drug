@@ -1,0 +1,1 @@
+{"systype":null,"dimensions":["120","120","120","90.0","90.0","90.0"],"input":["gromacs","openmm"],"forcefield":{"type":"c36m","files":["default"],"custom":["lig\/lig.rtf","lig\/lig.prm"]},"hmr":1}

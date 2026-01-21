@@ -111,3 +111,43 @@ backup_*/
 
 # .gitignore 자체 포함
 !.gitignore
+
+# === MD big files ===
+*.dcd
+*.xtc
+*.trr
+*.nc
+*.mdcrd
+*.rst7
+*.parm7
+*.prmtop
+*.inpcrd
+*.chk
+*.checkpoint
+
+# === Outputs ===
+results/
+output/
+tmp/
+logs/
+
+
+# === CHARMM-GUI generated bulk forcefield sets (do not version full sets) ===
+**/toppar/
+**/toppar.str
+**/par_all36*.prm
+**/top_all36*.rtf
+**/toppar_all36*.str
+
+# === logs ===
+*.log
+
+# === keep only scripts/docs for glycogate_bipod ===
+2026-01-20_Glycogate_Bipod/*
+!2026-01-20_Glycogate_Bipod/scripts/
+!2026-01-20_Glycogate_Bipod/scripts/**
+!2026-01-20_Glycogate_Bipod/docs/
+!2026-01-20_Glycogate_Bipod/docs/**
+
+# still ignore logs even in scripts
+*.log

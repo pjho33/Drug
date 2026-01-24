@@ -1,0 +1,30 @@
+# Large data files
+*.dcd
+*.rst
+*.chk
+*.crd
+*.psf
+*.pdb
+
+# Except small files
+!data/openmm/*.inp
+!data/openmm/openmm_run.py
+
+# Log files
+*.log
+nohup.out
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
